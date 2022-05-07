@@ -26,18 +26,6 @@ public class song
 		dateCreated = new Date();
 	}
 	
-	
-	//SETTERS:
-	public void setName(String n) 
-	{
-		name = n;
-	}
-	
-	public void setArtist(String a) 
-	{
-		artist = a;
-	}
-	
 	//GETTERS:
 
 	public String getName() 
