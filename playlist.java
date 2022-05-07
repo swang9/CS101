@@ -59,16 +59,6 @@ public class playlist
 		songList = new String [0];
 	}
 	
-	//SETTERS:
-	public void setName(String n) 
-	{
-		name = n;
-	}
-	
-	public void setList(int a) 
-	{
-		songList = new String [a];
-	}
 	
 	//GETTERS:
 
