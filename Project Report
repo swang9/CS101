@@ -1,0 +1,82 @@
+PROJECT REPORT
+
+SONG LIBRARY: Stacey Wang, George Wu, Dylan Xu, Fati De la Cruz, Harry Kay
+
+STATEMENT OF THE PROBLEM:
+
+BACKGROUND RESEARCH:
+
+DESIGN SOLUTION:
+Song
+-name: String
+-artist: String
+-dateCreated: Date
++getName(): String
++getArtist(): String
++getDateCreate(): Date
+
+Playlist
+-name: String
+-dateCreated: Date
+-songList: Song[]
++getName(): String
++getDateCreated: Date
++getSongList: Song[]
++addSong(song: Song): void
++removeSong(song: Song): void
++deleteList(): void
+
+Album
+-name: String
+-artist: String
+-dateCreated: Date
+-albumSongs: Song[]
++getName(): String
++getArtist(): String
++getDateCreate(): Date
++getAlbumSongs: Song[]
+
+Account
+-username: String
+-password: String
++getUsername: String
++getPassword: String
++setUsername(username: String): void
++setPassword(password: String): void
++deleteAccount(): void
+
+UserAccount extends Account
+-playlists: Playlist[]
++getPlaylists: Playlist[]
++addPlaylist(name: String): void
+
+ArtistAccount extends Account
+-songs: Song[]
+-albums: Album[]
+-publicName: String
++getSongs: Song[]
++getAlbums: Albums[]
++getPublicName: String
++setPublicName(name: String): void
++addAlbum(album: Album): void
++addSong(song: Song): void
+
+
+BUILD AND TEST A PROTOTYPE: see attached files
+
+USER'S GUIDE:
+
+REFLECTION:
+a. What concepts learned in class were helpful for the project?
+   Everything we've learned about classes, especially about inheritence, modularity and polymorphism were very helpful to know for this project.
+b. Which new concepts you learned on your own?
+c. How would you expand the project in the future?
+   The ability to play songs directly from the library, users can add their own covers of songs, ...
+d. Which part was the most difficult to develop and implement?
+
+CONTRIBUTIONS:
+Stacey Wang: Design Solution/UML Diagrams
+George Wu:
+Dylan Xu: Statement of the Problem, GUI
+Fati De la Cruz: Song, Playlist, Album
+Harry Kay:
