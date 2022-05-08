@@ -7,7 +7,7 @@ public class playlist
 	//STATE:
 	private String name;
 	private Date dateCreated;
-	private String [] songList;
+	private String [] songList; // LIST OF SONG OBJECTS INSTEAD OF STRINGS
 	private String[] newArr = null;
 	
 	//CONSTRUCTORS:
