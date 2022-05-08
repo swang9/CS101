@@ -5,6 +5,8 @@
 - change ArtistAccount to use ArrayList instead of arrays
 - change UserAccount to use ArrayList instead of arrays
 - add UserAccount method to add a new Playlist to their playlists
+- integrate GUI with backend
+- final testings
 
 # COMPLETED
 - SONG 
