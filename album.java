@@ -8,7 +8,7 @@ public class album
 	private String name;
 	private String artist;
 	private Date dateCreated;
-	private String [] albumSongs;
+	private String [] albumSongs; //LIST OF SONG OBJECTS INSTEAD OF STRINGS
 	
 	//CONSTRUCTORS:
 	public album() 
