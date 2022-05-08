@@ -5,6 +5,7 @@
 - change ArtistAccount to use ArrayList instead of arrays
 - change UserAccount to use ArrayList instead of arrays
 - add UserAccount method to add a new Playlist to their playlists
+- txt file database of all Songs and Users
 - integrate GUI with backend
 - final testings
 
