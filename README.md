@@ -9,5 +9,9 @@
 - integrate GUI with backend
 - final testings
 
+non coding:
+- write reflection
+- record demo video
+
 # COMPLETED
 - SONG 
