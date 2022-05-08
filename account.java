@@ -11,6 +11,11 @@ public class account
 		password = "";
 	}
 	
+	public account(String u, String p){
+		username = u;
+		password = p;
+	}
+	
 	//OTHER METHODS:
 	public void deleteAccount() 
 	{
