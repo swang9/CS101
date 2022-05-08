@@ -1,6 +1,3 @@
-# CS101
- 
- 
 # TO DO
 - change Playlist to use ArrayList instead of arrays
 - change Playlist to use Song objects in songList
