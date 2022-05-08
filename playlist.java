@@ -1,5 +1,7 @@
 import java.util.*;
 
+//CHANGE TO ARRAYLIST
+
 public class playlist
 {
 	//STATE:
