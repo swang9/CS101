@@ -27,6 +27,11 @@ public class Playlist
 		songList.add(s);
 	}
 
+	public String toString()
+	{
+		return name;
+	}
+
 	public void removeSong(Song s)
 	{
 		for (int i = 0; i < songList.size()-1; i++)
@@ -53,7 +58,8 @@ public class Playlist
 
 	public Song[] getSongList()
 	{
-		return (Song[]) songList.toArray();
+		Song[] myList = new Song[songList.size()];
+		return (Song[]) songList.toArray(myList);
 	}
 
 	public Date getDate()
