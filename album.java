@@ -1,61 +1,54 @@
-
 import java.util.Arrays;
 import java.util.Date;
+import java.util.ArrayList;
 
-public class album
+public class Album
 {
 	//STATE:
 	private String name;
 	private String artist;
 	private Date dateCreated;
-	private String [] albumSongs; //LIST OF SONG OBJECTS INSTEAD OF STRINGS
-	
+	private ArrayList<Song> albumSongs;
+
 	//CONSTRUCTORS:
-	public album() 
+	public Album()
 	{
 		name = "";
 		artist = "";
-		albumSongs = new String [0];
+		albumSongs = new ArrayList<Song>();
 		dateCreated = new Date();
 	}
-	
-	public album(String n, String a, int s) 
+
+	public Album(String n, String a, Song[] s)
 	{
 		name = n;
 		artist = a;
-		albumSongs = new String[s];
+		albumSongs = new ArrayList<Song>(Arrays.asList(s));
 		dateCreated = new Date();
 	}
-	
+
 	//OTHER METHODS
-	int head = 0;
-	public void addSong(String s) 
-	{
-		albumSongs[head] = s;
-		head++;
-	}
-	
-	
+
+
 	//GETTERS:
 
-	public String getName() 
+	public String getName()
 	{
 		return name;
 	}
-	
-	public String getArtist() 
+
+	public String getArtist()
 	{
 		return artist;
 	}
-	
-	public String getalbumSongs() 
+
+	public Song[] getAlbumSongs()
 	{
-		return Arrays.toString(albumSongs);
+		return (Song[]) albumSongs.toArray();
 	}
-	
-	public Date getDate() 
+
+	public Date getDate()
 	{
 		return dateCreated;
 	}
-	
 }
