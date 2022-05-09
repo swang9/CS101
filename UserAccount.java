@@ -8,17 +8,25 @@ public class UserAccount extends Account{
   //add constructor that takes in string username and loads info from database
   public UserAccount(String s)
   {
+    playlists = new ArrayList<Playlist>();
+    addPlaylist("0");
   }
 
   //methods
-  public void addPlaylist(String name) //FINISH calls playlist constructor, adds to playlist arraylist
+  public void addPlaylist(String name) //FINISH calls playlist construcor, adds playlist to arraylist
   {
+    playlists.add(new Playlist(name));
+  }
 
+  public void removePlaylist(Playlist playlist)
+  {
+    playlists.remove(playlist);
   }
 
   //getters
   public Playlist[] getPlaylists()
   {
-    return (Playlist[]) playlists.toArray();
+    Playlist[] mylist = new Playlist[playlists.size()];
+    return (Playlist[])playlists.toArray(mylist);
   }
 }
