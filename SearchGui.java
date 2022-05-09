@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
+// ******* add exit button
+
 public class SearchGui extends JFrame
 {
   //fields
@@ -14,6 +16,7 @@ public class SearchGui extends JFrame
   private JButton searchSongButton; //search song button
   private JButton searchAlbumButton; //search album button
   private JButton addButton; //add song button
+  private JButton exitButton; //exits search window
   private Playlist playlist; //playlist
   private JPanel panel;
 
@@ -40,7 +43,6 @@ public class SearchGui extends JFrame
     add(panel);
 
     //display window
-    pack();
     setVisible(true);
 
     //save playlist
@@ -73,6 +75,10 @@ public class SearchGui extends JFrame
     addButtonListener addListener = new addButtonListener();
     addButton.addActionListener(addListener);
 
+    exitButton = new JButton("Exit search");
+    exitButtonListener exitListener = new exitButtonListener();
+    exitButton.addActionListener(exitListener);
+
     //create panel
     panel = new JPanel();
 
@@ -81,8 +87,9 @@ public class SearchGui extends JFrame
     panel.add(searchText);
     panel.add(searchSongButton);
     panel.add(searchAlbumButton);
-    panel.add(infoText);
     panel.add(addButton);
+    panel.add(exitButton);
+    panel.add(infoText);
     addButton.setVisible(false);
   }
 
@@ -158,6 +165,16 @@ public class SearchGui extends JFrame
 
       //hide add song button
       addButton.setVisible(false);
+    }
+  }
+
+  //exitButtonListener
+  //closes search window
+  private class exitButtonListener implements ActionListener
+  {
+    public void actionPerformed(ActionEvent e)
+    {
+      dispose();
     }
   }
 }
