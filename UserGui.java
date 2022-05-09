@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-//    String name = JOptionPane.showInputDialog(f,"Enter Name");
-
 public class UserGui extends JFrame
 {
   // fields
@@ -47,7 +45,6 @@ public class UserGui extends JFrame
     add(panel);
 
     //Display window
-    pack();
     setVisible(true);
 
     //save username
@@ -68,7 +65,7 @@ public class UserGui extends JFrame
 
     playlistCreateButton = new JButton("Add new playlist");
     playlistCreateButtonListener playlistCreateListener = new playlistCreateButtonListener();
-    playlistCreateButton.addActionListener(playlistDeleteListener);
+    playlistCreateButton.addActionListener(playlistCreateListener);
 
     playlistSongDeleteButton = new JButton("Remove from playlist");
     playlistSongDeleteButtonListener playlistSongDeleteListener = new playlistSongDeleteButtonListener();
@@ -129,7 +126,11 @@ public class UserGui extends JFrame
       //fields
       Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
 
-      play.deleteList();
+      account.removePlaylist(play);
+
+      //update playlist selector
+      Playlist[] playlistArray1 = account.getPlaylists();
+      playlistBox.setModel(new DefaultComboBoxModel(playlistArray1));
     }
   }
 
@@ -196,5 +197,10 @@ public class UserGui extends JFrame
       new LoginGui();
       dispose();
     }
+  }
+
+  public static void main(String[] args)
+  {
+    new UserGui("John");
   }
 }
