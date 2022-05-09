@@ -1,48 +1,44 @@
-
-
 import java.util.*;
 
-public class song
+public class Song
 {
 	//STATE:
 	private String name;
 	private String artist ;
 	private Date dateCreated;
-	
+
 	//BEHAVIOR OR METHODS:
-	
+
 	//CONSTRUCTORS:
-	public song() 
+	public Song()
 	{
 		name = "";
 		artist = "";
 		dateCreated = new Date();
 	}
-	
-	public song(String n, String a) 
+
+	public Song(String n, String a)
 	{
 		name = n;
 		artist = a;
 		dateCreated = new Date();
 	}
-	
+
 	//GETTERS:
 
-	public String getName() 
+	public String getName()
 	{
 		return name;
 	}
-	
-	public String getArtist() 
+
+	public String getArtist()
 	{
 		return artist;
 	}
-	
-	public Date getDate() 
+
+	public Date getDate()
 	{
 		return dateCreated;
 	}
-	
+
 }
-
-
