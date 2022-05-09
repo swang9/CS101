@@ -167,7 +167,7 @@ public class UserGui extends JFrame
     public void actionPerformed(ActionEvent e)
     {
       //pass playlist to seach gui
-      SearchGui(playlistBox.getItemAt(playlistBox.getSelectedIndex()));
+      SearchGui search = new SearchGui(playlistBox.getItemAt(playlistBox.getSelectedIndex()));
 
       //update song selector
       playlist play = playlistBox.getItemAt(playlistBox.getSelectedIndex());
