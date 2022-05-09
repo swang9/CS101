@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class SearchGui extends JFrame
 {
@@ -13,14 +14,15 @@ public class SearchGui extends JFrame
   private JButton searchSongButton; //search song button
   private JButton searchAlbumButton; //search album button
   private JButton addButton; //add song button
-  private playlist playlist; //playlist
+  private Playlist playlist; //playlist
+  private JPanel panel;
 
   private final int WINDOW_WIDTH = 400;
   private final int WINDOW_HEIGHT = 350;
 
   //constructor
 
-  public SearchGui(playlist play)
+  public SearchGui(Playlist play)
   {
     //set window title
     setTitle("Song search");
@@ -47,7 +49,7 @@ public class SearchGui extends JFrame
 
   //methods
 
-  private void buildPanel();
+  private void buildPanel()
   {
     //create labels
     searchLabel = new JLabel("Enter a song or album");
@@ -81,6 +83,7 @@ public class SearchGui extends JFrame
     panel.add(searchAlbumButton);
     panel.add(infoText);
     panel.add(addButton);
+    addButton.setVisible(false);
   }
 
   //searchSongButtonListener
@@ -89,8 +92,9 @@ public class SearchGui extends JFrame
   {
     public void actionPerformed(ActionEvent e) //executes when button is pressed
     {
+      //check song exists, then load song
       // if (myUtility.checkSong(String songname)) - need to add
-      song s; // = myUtility.pullSong(String songname) - need to add
+      Song s = null; // = myUtility.pullSong(String songname) - need to add *******
 
       //print song info
       infoText.setText(""); //clears info area
@@ -103,9 +107,10 @@ public class SearchGui extends JFrame
       infoText.append(s.getArtist());
       infoText.append(System.lineSeparator());
 
-      infoText.append(s.getDateCreate().toString());
+      infoText.append(s.getDate().toString());
 
       //show add song button
+      addButton.setVisible(true);
     }
   }
 
@@ -116,8 +121,8 @@ public class SearchGui extends JFrame
     public void actionPerformed (ActionEvent e)
     {
       // if (myUtility.checkAlbum(String albumName)) - need to add
-      album a; // = myUtility.pullAlbum(String albumname) - need to add
-      song[] songs;
+      Album a = null; // = myUtility.pullAlbum(String albumname) - need to add *****
+      Song[] songs;
 
       //print album info
       songs = a.getAlbumSongs();
@@ -125,15 +130,34 @@ public class SearchGui extends JFrame
       infoText.append("Album: " + a.getName());
       infoText.append(System.lineSeparator());
       infoText.append("Artist: " + a.getArtist());
-      for (i = 0; i < songs.length; i++)
+      for (int i = 0; i < songs.length; i++)
       {
-        infoText.append(song[i].getName());
+        infoText.append(songs[i].getName());
         infoText.append(System.lineSeparator());
       }
 
       //remove add song button
-
+      addButton.setVisible(false);
     }
   }
 
+  //addButtonListener
+  //adds song in search text
+  private class addButtonListener implements ActionListener
+  {
+    public void actionPerformed(ActionEvent e)
+    {
+      //check song exists, then load song
+      // if (myUtility.checkSong(String songname)) - need to add
+      Song s = null; // = myUtility.pullSong(String songname) - need to add *********
+      if(!(Arrays.asList(playlist.getSongList()).contains(s)))
+      {
+        //add song to playlist
+        playlist.addSong(s);
+      }
+
+      //hide add song button
+      addButton.setVisible(false);
+    }
+  }
 }
