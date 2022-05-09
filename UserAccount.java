@@ -7,4 +7,5 @@ public class UserAccount extends Account{
   //getters
   public Playlist[] getPlaylists(){
   return this.playlists;
+  }
 }
