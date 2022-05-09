@@ -1,64 +1,46 @@
 import java.util.*;
-
-//CHANGE TO ARRAYLIST
+import java.util.ArrayList;
 
 public class playlist
 {
 	//STATE:
 	private String name;
 	private Date dateCreated;
-	private String [] songList; // LIST OF SONG OBJECTS INSTEAD OF STRINGS
-	private String[] newArr = null;
+	private ArrayList<String> songList = new ArrayList<String>();
 	
 	//CONSTRUCTORS:
 	public playlist() 
 	{
 		name = "";
-		songList = new String [0];
 		dateCreated = new Date();
 	}
 	
-	public playlist(String n, int a) 
+	public playlist(String n) 
 	{
 		name = n;
-		songList = new String[a];
 		dateCreated = new Date();
 	}
 	
 	//OTHER METHODS
-	int head = 0;
 	public void addSong(String s) 
 	{
-		songList[head] = s;
-		head++;
+		songList.add(s);
 	}
 	
 	public void removeSong(String s) 
 	{
-		for (int i = 0; i < songList.length-1; i++) 
+		for (int i = 0; i < songList.size()-1; i++) 
 		{
-            if(songList[i].equals(s))
+            if(songList.get(i).equals(s))
             {
-                newArr = new String[songList.length - 1];
-                for(int index = 0; index < i; index++)
-                {
-                    newArr[index] = songList[index];
-                }
-                
-                for(int j = i; j < songList.length - 1; j++)
-                {
-                    newArr[j] = songList[j+1];
-                }
-                break;
+               songList.remove(i);
             }
         } 
-		songList = newArr;
-	
 	}
 	
 	public void deleteList()
 	{
-		songList = new String [0];
+		songList.clear();
 	}
 	
 	
@@ -69,9 +51,9 @@ public class playlist
 		return name;
 	}
 	
-	public String getList() 
+	public ArrayList<String> getList() 
 	{
-		return Arrays.toString(songList);
+		return songList;
 	}
 	
 	public Date getDate() 
@@ -80,4 +62,3 @@ public class playlist
 	}
 	
 }
-
