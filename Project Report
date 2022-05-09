@@ -13,7 +13,7 @@ Song
 -dateCreated: Date
 +getName(): String
 +getArtist(): String
-+getDateCreate(): Date
++getDate(): Date
 
 Playlist
 -name: String
