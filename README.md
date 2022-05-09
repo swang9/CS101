@@ -5,8 +5,12 @@
 - change ArtistAccount to use ArrayList instead of arrays
 - change UserAccount to use ArrayList instead of arrays
 - add UserAccount method to add a new Playlist to their playlists
-- txt file database of all Songs and Users
+- integrate txt file database of all Songs and Users
 - integrate GUI with backend
+   - add constructors UserAccount(String username) and ArtistAccount(String username) that search database and loads info of account w given username
+   - add utility class for login funcionality that can
+      1 check to see if given username and password match existing username and password
+      2 check to see if given username is available (not taken)
 - final testings
 
 non coding:
