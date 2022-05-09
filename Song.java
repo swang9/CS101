@@ -31,6 +31,11 @@ public class Song
 		return name;
 	}
 
+	public String toString()
+	{
+		return name;
+	}
+
 	public String getArtist()
 	{
 		return artist;
