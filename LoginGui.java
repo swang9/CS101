@@ -17,8 +17,8 @@ public class LoginGui extends JFrame
   private JButton registerButton; //register button
   private JPanel panel; //panel object
 
-  private final int WINDOW_WIDTH = 400; //window width
-  private final int WINDOW_HEIGHT = 350; //window height
+  private final int WINDOW_WIDTH = 300; //window width
+  private final int WINDOW_HEIGHT = 170; //window height
   private final String[] typeArray = {"Listener","Artist"}; //account type list
 
   //constructor
@@ -41,7 +41,6 @@ public class LoginGui extends JFrame
     add(panel);
 
     //display window
-    pack();
     setVisible(true);
   }
 
