@@ -13,14 +13,16 @@ public class UserGui extends JFrame
   private String username; //stores username
   private JComboBox playlistBox; //playlsit selector
   private JComboBox playlistSongBox; //song selector within playlist
-  private JButton playlistDisplayButton; //button to display playlistsongbox
+  private JButton playlistDisplayButton; //button to display playlistSongBox
   private JButton playlistDeleteButton; //button to delete playlist
   private JButton playlistCreateButton; //button to create playlist
   private JButton playlistSongDeleteButton; // button to delete song from playlist
   private JButton playlistSongAddButton; //button to open song search window to add to playlist
   private JButton logoutButton; //button to return to login screen
-  private playlist[] playlistArray; //arraylist of playlists
-  private song[] songArray; //arraylist of songs
+  private Playlist[] playlistArray; //arraylist of playlists
+  private Song[] songArray; //arraylist of songs
+  private UserAccount account;
+  private JPanel panel;
 
   private final int WINDOW_WIDTH = 400; //window width
   private final int WINDOW_HEIGHT = 400; //window height
@@ -33,7 +35,7 @@ public class UserGui extends JFrame
     setTitle(user + "'s Libray'");
 
     //set size of window
-    setsize(WINDOW_WIDTH,WINDOW_HEIGHT);
+    setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
 
     //set window close behavior
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +64,7 @@ public class UserGui extends JFrame
 
     playlistDeleteButton = new JButton("Delete playlist");
     playlistDeleteButtonListener playlistDeleteListener = new playlistDeleteButtonListener();
-    playlistDeteleButton.addActionListener(playlistDeleteListener);
+    playlistDeleteButton.addActionListener(playlistDeleteListener);
 
     playlistCreateButton = new JButton("Add new playlist");
     playlistCreateButtonListener playlistCreateListener = new playlistCreateButtonListener();
@@ -81,7 +83,7 @@ public class UserGui extends JFrame
     logoutButton.addActionListener(logoutListener);
 
     //create selectors
-    UserAccount account = new UserAccount();
+    account = new UserAccount(user);
     playlistArray = account.getPlaylists();
     playlistBox = new JComboBox(account.getPlaylists());
 
@@ -110,10 +112,11 @@ public class UserGui extends JFrame
     public void actionPerformed(ActionEvent e) //executes when button is clicked
     {
       //fields
-      playlist play = playlistBox.getItemAt(playlistBox.getSelectedIndex());
-      song[] songArray1 = play.getSongList();
+      Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
+      Song[] songArray1 = play.getSongList();
 
-      playlistSongBox = new JComboBox(songArray1); //updates song display box
+      //update song display box
+      playlistSongBox.setModel(new DefaultComboBoxModel(songArray1));
     }
   }
 
@@ -124,7 +127,7 @@ public class UserGui extends JFrame
     public void actionPerformed(ActionEvent e)
     {
       //fields
-      playlist play = playlistBox.getItemAt(playlistBox.getSelectedIndex());
+      Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
 
       play.deleteList();
     }
@@ -137,14 +140,14 @@ public class UserGui extends JFrame
     public void actionPerformed(ActionEvent e)
     {
       //prompt user for playlist name
-      String name = JOptionPane.showInputDialog(f, "Enter name");
+      String name = JOptionPane.showInputDialog("Enter name");
 
       //create playlist
       account.addPlaylist(name);
 
       //update playlist selector
-      playlistArray = account.getPlaylists();
-      playlistBox = new JComboBox();
+      Playlist[] playlistArray1 = account.getPlaylists();
+      playlistBox.setModel(new DefaultComboBoxModel(playlistArray1));
     }
   }
 
@@ -155,8 +158,14 @@ public class UserGui extends JFrame
     public void actionPerformed(ActionEvent e)
     {
       //fields
-      song song = playlistSongBox.getItemAt(playlistSongBox.getSelectedIndex());
-      playlist play = playlistBox.getItemAt(playlistBox.getSelectedIndex());
+      Song song = (Song) playlistSongBox.getItemAt(playlistSongBox.getSelectedIndex());
+      Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
+
+      play.removeSong(song); //remove song
+
+      //update song selctor
+      Song[] songArray1 = play.getSongList();
+      playlistSongBox.setModel(new DefaultComboBoxModel(songArray1));
     }
   }
 
@@ -167,13 +176,14 @@ public class UserGui extends JFrame
     public void actionPerformed(ActionEvent e)
     {
       //pass playlist to seach gui
-      SearchGui search = new SearchGui(playlistBox.getItemAt(playlistBox.getSelectedIndex()));
+      SearchGui search = new SearchGui((Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex()));
 
       //update song selector
-      playlist play = playlistBox.getItemAt(playlistBox.getSelectedIndex());
-      song[] songArray1 = play.getSongList();
+      Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
+      Song[] songArray1 = play.getSongList();
 
-      playlistSongBox = new JComboBox(songArray1); //updates song display box
+      //update song selector
+      playlistSongBox.setModel(new DefaultComboBoxModel(songArray1));
     }
   }
 
