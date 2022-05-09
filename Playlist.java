@@ -1,64 +1,64 @@
 import java.util.*;
 import java.util.ArrayList;
 
-public class playlist
+public class Playlist
 {
 	//STATE:
 	private String name;
 	private Date dateCreated;
-	private ArrayList<String> songList = new ArrayList<String>();
-	
+	private ArrayList<Song> songList = new ArrayList<Song>();
+
 	//CONSTRUCTORS:
-	public playlist() 
+	public Playlist()
 	{
 		name = "";
 		dateCreated = new Date();
 	}
-	
-	public playlist(String n) 
+
+	public Playlist(String n)
 	{
 		name = n;
 		dateCreated = new Date();
 	}
-	
+
 	//OTHER METHODS
-	public void addSong(String s) 
+	public void addSong(Song s)
 	{
 		songList.add(s);
 	}
-	
-	public void removeSong(String s) 
+
+	public void removeSong(Song s)
 	{
-		for (int i = 0; i < songList.size()-1; i++) 
+		for (int i = 0; i < songList.size()-1; i++)
 		{
             if(songList.get(i).equals(s))
             {
                songList.remove(i);
             }
-        } 
+        }
 	}
-	
+
 	public void deleteList()
 	{
 		songList.clear();
 	}
-	
-	
+
+
 	//GETTERS:
 
-	public String getName() 
+	public String getName()
 	{
 		return name;
 	}
-	
-	public ArrayList<String> getList() 
+
+	public Song[] getSongList()
 	{
-		return songList;
+		return (Song[]) songList.toArray();
 	}
-	
-	public Date getDate() 
+
+	public Date getDate()
 	{
 		return dateCreated;
 	}
-	
+
 }
