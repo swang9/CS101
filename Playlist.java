@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.ArrayList;
 
-public class Playlist
+public class Playlist implements java.io.Serializable
 {
 	//STATE:
 	private String name;
@@ -34,18 +34,7 @@ public class Playlist
 
 	public void removeSong(Song s)
 	{
-		for (int i = 0; i < songList.size()-1; i++)
-		{
-            if(songList.get(i).equals(s))
-            {
-               songList.remove(i);
-            }
-        }
-	}
-
-	public void deleteList()
-	{
-		songList.clear();
+		songList.remove(s);
 	}
 
 
@@ -61,10 +50,4 @@ public class Playlist
 		Song[] myList = new Song[songList.size()];
 		return (Song[]) songList.toArray(myList);
 	}
-
-	public Date getDate()
-	{
-		return dateCreated;
-	}
-
 }

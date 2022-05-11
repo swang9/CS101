@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class Album
+public class Album implements java.io.Serializable
 {
 	//STATE:
 	private String name;
@@ -44,11 +44,6 @@ public class Album
 
 	public Song[] getAlbumSongs()
 	{
-		return (Song[]) albumSongs.toArray();
-	}
-
-	public Date getDate()
-	{
-		return dateCreated;
+		return (Song[]) albumSongs.toArray(new Song[albumSongs.size()]);
 	}
 }

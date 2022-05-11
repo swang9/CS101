@@ -1,35 +1,31 @@
+import java.util.ArrayList;
+
 public class ArtistAccount extends Account{
   // data fields
-  private Song[] songs; //CHANGE TO ARRAYLIST
-  private Album[] albums; //CHANGE TO ARRAYLIST
-  private String publicName;
+  private ArrayList<Album> albums; //CHANGE TO ARRAYLIST
 
   //constructors
-  public ArtistAccount(){
+  public ArtistAccount()
+  {
   }
 
+  public ArtistAccount(String user, String pass)
+  {
+    super(user,pass);
+    albums = new ArrayList<Album>();
+  }
 
   //getters
-  public Song[] getSongs(){ //CHANGE TO ARRAYLIST
-    return this.songs;
-  }
-  public Album[] getAlbums(){ //CHANGE TO ARRAYLIST
-    return this.albums;
-  }
-  public String getPublicName(){
-    return this.publicName;
+
+  public Album[] getAlbums()
+  {
+    return albums.toArray(new Album[albums.size()]);
   }
 
-  //setters
-  public void setPublicName(String name){
-    this.publicName = name;
-  }
 
   //methods
-  public void addAlbum(Album a){
-    //add a to albums
-  }
-  public void addSong(Song a){
-    //add a to songs
+  public void addAlbum(Album a)
+  {
+    albums.add(a);
   }
  }

@@ -1,82 +1,190 @@
-PROJECT REPORT
+MUSIC LIBRARY PROJECT REPORT
 
-SONG LIBRARY: Stacey Wang, George Wu, Dylan Xu, Fati De la Cruz, Harry Kay
+Group Members: Stacey Wang, George Wu, Dylan Xu, Fati De la Cruz, Harry Kay
+
 
 STATEMENT OF THE PROBLEM:
 
+Develop a music library management system for users and artists. Users are able to search for songs, albums and artists, and add songs to their playlists. Artists are able to add songs and albums to the library. The basic objects in the system would be users, artists, playlists, albums, and songs. There would be GUI for users to create an account, search by song/album/artist, view songs in an album, viewing an artist’s discography, and create, view, and edit playlists. Additionally, artists will have GUI to create an account, and add songs/albums to their discography.
+
+
 BACKGROUND RESEARCH:
 
+We looked at music streaming platforms like Spotify and Apple Music as a basis for our Music Library System. Spotify, for example, allows users to create and manage playlists, and search for and save songs.
+
+
 DESIGN SOLUTION:
-Song
--name: String
--artist: String
--dateCreated: Date
-+getName(): String
-+getArtist(): String
-+getDate(): Date
 
-Playlist
--name: String
--dateCreated: Date
--songList: Song[]
-+getName(): String
-+getDateCreated: Date
-+getSongList: Song[]
-+addSong(song: Song): void
-+removeSong(song: Song): void
-+deleteList(): void
-
-Album
--name: String
--artist: String
--dateCreated: Date
--albumSongs: Song[]
-+getName(): String
-+getArtist(): String
-+getDateCreate(): Date
-+getAlbumSongs: Song[]
-
-Account
+Account implements java.io.Serializable
 -username: String
 -password: String
-+getUsername: String
-+getPassword: String
-+setUsername(username: String): void
-+setPassword(password: String): void
-+deleteAccount(): void
++getUsername(): String
++getPassword(): String
 
-UserAccount extends Account
--playlists: Playlist[]
-+getPlaylists: Playlist[]
-+addPlaylist(name: String): void
+Album implements java.io.Serializable
+-name: String
+-artist: String
+-dateCreated: Date
+-albumSongs: ArrayList<Song>
++getName(): String
++getArtist(): String
++getAlbumSongs(): Song[]
 
 ArtistAccount extends Account
--songs: Song[]
--albums: Album[]
--publicName: String
-+getSongs: Song[]
-+getAlbums: Albums[]
-+getPublicName: String
-+setPublicName(name: String): void
-+addAlbum(album: Album): void
-+addSong(song: Song): void
+-albums: ArrayList<Album>
++getAlbums(): Album[]
++addAlbum(Album a): void
+ArtistGui extends JFrame
+-artistName: String
+-panel: JPanel
+-singleButton: JButton
+-albumButton: JButton
+-logoutButton: JButton
+-textArea: JTextArea
+-account: ArtistAccount
++buildPanel(): void
 
+LoginGui extends JFrame
+-userLabel: JLabel
+-passLabel: JLabel
+-typeLabel: JLabel
+-userText: JTextField
+-passText: JPasswordField
+-typeBox: JComboBox
+-registerButton: JButton
+-loginButton: JButton
+-panel: JPanel
+-WINDOW_WIDTH: int
+-WINDOW_HEIGHT: int
+-typeArray: String[]
++buildPanel(): void
+
+MyAppUtils
+-dataFolderInitiated: Boolean
+-MY_APP_DATA_ROOT: String
++initDataFolder(): void
++saveAccount(Account acct): void
++deleteAccount(Account acct): void
++getAccount(String username): Account
++findSongs(String artistName, String songName, String albumName): song[]
+
+Playlist implements java.io.Serializable
+-name: String
+-dateCreated: Date
+-songList: ArrayList<Song>
++addSong(Song s): void
++removeSong(Song s): void
++toString(): String
++getName(): String
++getSongList(): Song[]
+
+SearchGui extends JFrame
+-searchLabel: JLabel
+-searchText: JTextField
+-infoText: JTextArea
+-searchButton: JButton
+-addButton: JButton
+-exitButton: JButton
+-songSelect: JComboBox
+-panel: JPanel
+-playlist: Playlist
+-account: UserAccount
+-WINDOW_HEIGHT: int
+-WINDOW_WIDTH: int
++buildPanel(): void
+
+Song implements java.io.Serializable
+-name: String
+-artist: String
+-album: String
++getName(): String
++getAlbum(): String
++toString(): String
++songInfo(): String
++getArtist(): String
++equals(Object obj): Boolean
+
+UserAccount extends Account
+-playlists: ArrayList<Playlist>
++addPlaylist(String name): void
++removePlaylist(Playlist playlist): void
++getPlaylists(): Playlist[]
+
+UserGui extends JFrame
+-playlistBox: JComboBox
+-playlistSongBox: JComboBox
+-playlistDispayButton: JButton
+-playlistDeleteButton:  JButton
+-playlistCreateButton: JButton
+-playlistSongDeleteButton: JButton
+-playlistSongAddButton: JButton
+-logoutButton: JButton
+-playlistArray: Playlist[]
+-songArray: Song[]
+-account: UserAccount
+-panel: JPanel
+-WINDOW_WIDTH: int
+-WINDOW_HEIGHT: int
++buildPanel(): void
 
 BUILD AND TEST A PROTOTYPE: see attached files
 
 USER'S GUIDE:
+Login Screen
+To Register an Account:
+Enter desired username and password
+Select account type (Artist/User)
+Click “Register”
+To Login to an existing Account:
+Enter existing username and password
+Click “Login”
+Artist Interface:
+To release a song/album, click corresponding song/album button
+Follow & fill prompts w/ required info
+User Interface:
+To create a playlist:
+Click “Add new playlist”
+To delete a playlist:
+Click “Delete playlist”
+Editing playlists
+Choose desired playlist at top left, then click “Select playlist” to update song selector
+To add a song:
+Click “add song to playlist”
+Follow Search Interface instructions
+Click “Select playlist” to update song list
+To view/remove a song
+Use middle selector to veiw/select a song
+Click “Remove from playlist”
+Search Interface
+Type a song/album/artist name to search in the top text box
+Clicking search will display matching songs in the text area below
+Click search also reveals a song selector with those songs
+Click “add song” to add selected song
+When done, click “exit search”
+
+
+
 
 REFLECTION:
 a. What concepts learned in class were helpful for the project?
-   Everything we've learned about classes, especially about inheritence, modularity and polymorphism were very helpful to know for this project.
+
+Everything we've learned about classes, especially about inheritence, modularity and polymorphism were very helpful to know for this project. The larger design principles with classes guided the planning and implementation of this project.
+
 b. Which new concepts you learned on your own?
+
+I’ve learned a lot about working with GUI design in swing and database implementation with class Serialization
+
 c. How would you expand the project in the future?
-   The ability to play songs directly from the library, users can add their own covers of songs, encrypt passwords
+
+   The ability to play songs directly from the library, users can add their own covers of songs, encrypted passwords
+
 d. Which part was the most difficult to develop and implement?
+
+The most difficult part was planning the file i/o portion, and designing the utility methods that would allow for implementing the database with the rest of the system. There was also a lot of troubleshooting that had to be done with the utility methods for the i/o.
 
 CONTRIBUTIONS:
 Stacey Wang: Design Solution/UML Diagrams
 George Wu:
-Dylan Xu: Statement of the Problem, all GUI, database implementation, MyAppUtils, general troubleshooting
+Dylan Xu: Statement of the Problem, GUI, file i/o, troubleshooting, video
 Fati De la Cruz: Song, Playlist, Album
 Harry Kay:

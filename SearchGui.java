@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
-// ******* add exit button
-
 public class SearchGui extends JFrame
 {
   //fields
@@ -13,19 +11,21 @@ public class SearchGui extends JFrame
   private JLabel searchLabel; //search bar label
   private JTextField searchText; //search text field
   private JTextArea infoText; //info text field
-  private JButton searchSongButton; //search song button
-  private JButton searchAlbumButton; //search album button
+  private JButton searchButton; //search button
   private JButton addButton; //add song button
   private JButton exitButton; //exits search window
-  private Playlist playlist; //playlist
+  private JComboBox songSelect; //song selector
   private JPanel panel;
 
-  private final int WINDOW_WIDTH = 400;
-  private final int WINDOW_HEIGHT = 350;
+  private final Playlist playlist; //playlist
+  private final UserAccount account; //user account
+
+  private final int WINDOW_WIDTH = 600;
+  private final int WINDOW_HEIGHT = 300;
 
   //constructor
 
-  public SearchGui(Playlist play)
+  public SearchGui(Playlist play,UserAccount accountIn)
   {
     //set window title
     setTitle("Song search");
@@ -45,8 +45,9 @@ public class SearchGui extends JFrame
     //display window
     setVisible(true);
 
-    //save playlist
+    //save playlist & user
     playlist = play;
+    account = accountIn;
   }
 
   //methods
@@ -54,22 +55,18 @@ public class SearchGui extends JFrame
   private void buildPanel()
   {
     //create labels
-    searchLabel = new JLabel("Enter a song or album");
+    searchLabel = new JLabel("Enter a song, album or artist");
 
-    //create text fields
+    //create text field
     searchText = new JTextField(20);
 
-    //create text areas
-    infoText = new JTextArea(20,25);
+    //create text area
+    infoText = new JTextArea(15,30);
 
     //create buttons
-    searchSongButton = new JButton("Search song");
-    searchSongButtonListener searchSongListener = new searchSongButtonListener();
-    searchSongButton.addActionListener(searchSongListener);
-
-    searchAlbumButton = new JButton("Search album");
-    searchAlbumButtonListener searchAlbumListener = new searchAlbumButtonListener();
-    searchAlbumButton.addActionListener(searchAlbumListener);
+    searchButton = new JButton("Search");
+    searchButtonListener searchSongListener = new searchButtonListener();
+    searchButton.addActionListener(searchSongListener);
 
     addButton = new JButton("Add song");
     addButtonListener addListener = new addButtonListener();
@@ -79,72 +76,70 @@ public class SearchGui extends JFrame
     exitButtonListener exitListener = new exitButtonListener();
     exitButton.addActionListener(exitListener);
 
+    songSelect = new JComboBox();
+
     //create panel
     panel = new JPanel();
 
     //add components to panel
     panel.add(searchLabel);
     panel.add(searchText);
-    panel.add(searchSongButton);
-    panel.add(searchAlbumButton);
-    panel.add(addButton);
+    panel.add(searchButton);
     panel.add(exitButton);
     panel.add(infoText);
+    panel.add(songSelect);
+    panel.add(addButton);
+    songSelect.setVisible(false);
     addButton.setVisible(false);
   }
 
-  //searchSongButtonListener
+  //searchButtonListener
   //finds song and displays info
-  private class searchSongButtonListener implements ActionListener
+  private class searchButtonListener implements ActionListener
   {
     public void actionPerformed(ActionEvent e) //executes when button is pressed
     {
-      //check song exists, then load song
-      // if (myUtility.checkSong(String songname)) - need to add
-      Song s = null; // = myUtility.pullSong(String songname) - need to add *******
+      String search;
+      Song[] songList;
+      String info;
 
-      //print song info
-      infoText.setText(""); //clears info area
+      //get search bar text
+      search = searchText.getText();
 
-      infoText.append("Song: ");
-      infoText.append(s.getName());
-      infoText.append(System.lineSeparator());
+      //System.out.println("searchbutton");
 
-      infoText.append("Artist: ");
-      infoText.append(s.getArtist());
-      infoText.append(System.lineSeparator());
-
-      infoText.append(s.getDate().toString());
-
-      //show add song button
-      addButton.setVisible(true);
-    }
-  }
-
-  //searchAlbumButtonListener
-  //finds album and displays songs
-  private class searchAlbumButtonListener implements ActionListener
-  {
-    public void actionPerformed (ActionEvent e)
-    {
-      // if (myUtility.checkAlbum(String albumName)) - need to add
-      Album a = null; // = myUtility.pullAlbum(String albumname) - need to add *****
-      Song[] songs;
-
-      //print album info
-      songs = a.getAlbumSongs();
-      infoText.setText(""); //clears info area
-      infoText.append("Album: " + a.getName());
-      infoText.append(System.lineSeparator());
-      infoText.append("Artist: " + a.getArtist());
-      for (int i = 0; i < songs.length; i++)
-      {
-        infoText.append(songs[i].getName());
-        infoText.append(System.lineSeparator());
+      // call search utility, save songs
+      try{
+        songList = MyAppUtils.findSongs(search,search,search);
+      } catch (Exception ex1){
+        ex1.printStackTrace();
+        songList = new Song[0];
       }
 
-      //remove add song button
-      addButton.setVisible(false);
+      if (songList.length >= 1)
+      {
+        int size = 0;
+        info = "";
+        for (int i = 0; i < songList.length; i++)
+        {
+          info = info.concat((i+1) + "  " + songList[i].songInfo() + "\n");
+          if (songList[i].songInfo().length() > size)
+          {
+            size = songList[i].songInfo().length();
+          }
+        }
+
+        //update info box & set box size
+        //System.out.println(info);
+        infoText.setSize(songList.length,size);
+        infoText.setText(info);
+
+        //show add song button
+        //show song selector
+        songSelect.setModel(new DefaultComboBoxModel(songList));
+        songSelect.setVisible(true);
+        addButton.setVisible(true);
+      }
     }
   }
 
@@ -154,17 +149,15 @@ public class SearchGui extends JFrame
   {
     public void actionPerformed(ActionEvent e)
     {
-      //check song exists, then load song
-      // if (myUtility.checkSong(String songname)) - need to add
-      Song s = null; // = myUtility.pullSong(String songname) - need to add *********
-      if(!(Arrays.asList(playlist.getSongList()).contains(s)))
+      Song s = (Song) songSelect.getItemAt(songSelect.getSelectedIndex());
+      //add song to playlist
+      playlist.addSong(s);
+      try{
+        MyAppUtils.saveAccount(account);
+      } catch (Exception ex1)
       {
-        //add song to playlist
-        playlist.addSong(s);
+        ex1.printStackTrace();
       }
-
-      //hide add song button
-      addButton.setVisible(false);
     }
   }
 

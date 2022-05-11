@@ -17,11 +17,11 @@ public class LoginGui extends JFrame
   private JButton registerButton; //register button
   private JPanel panel; //panel object
 
-  private final int WINDOW_WIDTH = 300; //window width
+  private final int WINDOW_WIDTH = 260; //window width
   private final int WINDOW_HEIGHT = 170; //window height
-  private final String[] typeArray = {"Listener","Artist"}; //account type list
+  private final String[] typeArray = {"User","Artist"}; //account type list
 
-  //constructor
+  //constructorF
 
   public LoginGui()
   {
@@ -94,12 +94,51 @@ public class LoginGui extends JFrame
       // fields
       String userIn;
       String passIn;
-      String type;
+      Account acc = null;
 
-      /***    NEEDS IMPLEMENTED ACCOUNT LOGIN SYSTEM     ***/
-      //   -  check if account username, pass and type matches existing account
-      //   -  if so, send to listener or artist gui
-      //   -  if not, do nothing
+      userIn = userText.getText();
+      passIn = passText.getText();
+
+      //make sure there is input
+      if(userIn != null)
+      {
+        //load account info from database
+        try
+        {
+          acc = MyAppUtils.getAccount(userIn);
+        } catch (Exception err)
+        {
+          err.printStackTrace();
+        }
+
+        //continue if account exists
+        if (acc != null)
+        {
+          //System.out.println("ifacc");
+          //check if password matches, then load gui corresponding to account type
+          if (acc.getPassword().equals(passIn))
+          {
+            //System.out.println(acc.getType());
+            if (acc instanceof ArtistAccount)
+            {
+              new ArtistGui((ArtistAccount) acc);
+              dispose();
+            }
+            if (acc instanceof UserAccount)
+            {
+              //System.out.println("ifuser");
+              new UserGui((UserAccount) acc);
+              dispose();
+            }
+          }
+          else{
+            JOptionPane.showMessageDialog(null,"Password is incorrect");
+          }
+        }
+        else{
+          JOptionPane.showMessageDialog(null,"Username does not exist");
+        }
+      }
     }
   }
 
@@ -114,12 +153,61 @@ public class LoginGui extends JFrame
       String userIn;
       String passIn;
       String type;
+      Account accCheck;
 
-      /***    NEEDS IMPLEMENTED ACCOUNT REGISTRATION SYSTEM     ***/
-      //    -  check if account user matches existing account
-      //    -  if not, create new user with given info and send to
-      //       corresponding gui
-      //    -  if account user is taken, do nothing
+      userIn = userText.getText();
+      passIn = passText.getText();
+      type = (String) typeBox.getItemAt(typeBox.getSelectedIndex());
+
+      //make sure there is input
+      if(userIn != null)
+      {
+        //load account info from database
+        try
+        {
+          accCheck = MyAppUtils.getAccount(userIn);
+        } catch (Exception ex1)
+        {
+          accCheck = null;
+          ex1.printStackTrace();
+        }
+
+        //continue if account does not exist
+        if (accCheck == null)
+        {
+          //create and save account, and call corresponding gui
+          if (type == "Artist")
+          {
+            ArtistAccount accRegister = new ArtistAccount(userIn,passIn);
+
+            try
+            {
+              MyAppUtils.saveAccount(accRegister);
+              new ArtistGui(accRegister);
+              dispose();
+            } catch (Exception ex2)
+            {
+              ex2.printStackTrace();
+            }
+          }
+          else
+          {
+            UserAccount accRegister = new UserAccount(userIn,passIn);
+            try
+            {
+              MyAppUtils.saveAccount(accRegister);
+              new UserGui(accRegister);
+              dispose();
+            } catch (Exception ex3)
+            {
+              ex3.printStackTrace();
+            }
+          }
+        }
+        else{
+          JOptionPane.showMessageDialog(null,"Username is taken");
+        }
+      }
     }
   }
 

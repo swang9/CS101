@@ -5,11 +5,17 @@ public class UserAccount extends Account{
   private ArrayList<Playlist> playlists;
 
   //constructors
-  //add constructor that takes in string username and loads info from database
-  public UserAccount(String s)
+  public UserAccount()
   {
     playlists = new ArrayList<Playlist>();
-    addPlaylist("0");
+    addPlaylist("Playlist 0");
+  }
+
+  public UserAccount(String user, String pass)
+  {
+    super(user,pass);
+    playlists = new ArrayList<Playlist>();
+    addPlaylist("Playlist 0");
   }
 
   //methods

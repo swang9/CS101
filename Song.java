@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class Song
+public class Song implements java.io.Serializable
 {
 	//STATE:
 	private String name;
-	private String artist ;
-	private Date dateCreated;
+	private String artist;
+	private String album;
 
 	//BEHAVIOR OR METHODS:
 
@@ -14,14 +14,19 @@ public class Song
 	{
 		name = "";
 		artist = "";
-		dateCreated = new Date();
 	}
 
 	public Song(String n, String a)
 	{
 		name = n;
 		artist = a;
-		dateCreated = new Date();
+	}
+
+	public Song(String Sname, String Sartist, String Salbum)
+	{
+		name = Sname;
+		artist = Sartist;
+		album = Salbum;
 	}
 
 	//GETTERS:
@@ -31,9 +36,20 @@ public class Song
 		return name;
 	}
 
+	public String getAlbum()
+	{
+		return album;
+	}
+
 	public String toString()
 	{
 		return name;
+	}
+
+	public String songInfo()
+	{
+		String info = new String("Name: "+name+" Artist: "+artist + ((album == null) ? "" : (" Album: " + album)));
+		return info;
 	}
 
 	public String getArtist()
@@ -41,9 +57,22 @@ public class Song
 		return artist;
 	}
 
-	public Date getDate()
+	@Override
+	public boolean equals(Object obj)
 	{
-		return dateCreated;
-	}
 
+
+		if(this == obj)
+				return true;
+
+
+		if(obj == null || obj.getClass()!= this.getClass())
+				return false;
+
+
+		Song s = (Song) obj;
+			
+
+		return (s.songInfo() == this.songInfo());
+	}
 }

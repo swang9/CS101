@@ -8,7 +8,6 @@ public class UserGui extends JFrame
 {
   // fields
 
-  private String username; //stores username
   private JComboBox playlistBox; //playlsit selector
   private JComboBox playlistSongBox; //song selector within playlist
   private JButton playlistDisplayButton; //button to display playlistSongBox
@@ -23,14 +22,17 @@ public class UserGui extends JFrame
   private JPanel panel;
 
   private final int WINDOW_WIDTH = 400; //window width
-  private final int WINDOW_HEIGHT = 400; //window height
+  private final int WINDOW_HEIGHT = 200; //window height
 
   //constructor
 
-  public UserGui(String user)
+  public UserGui(UserAccount accountIn)
   {
+    //save account
+    account = accountIn;
+
     //set window title
-    setTitle(user + "'s Libray'");
+    setTitle(account.getUsername() + "'s Libray");
 
     //set size of window
     setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
@@ -39,20 +41,17 @@ public class UserGui extends JFrame
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     //build panel
-    buildPanel(user);
+    buildPanel(account);
 
     //add panel to JFrarme content pane
     add(panel);
 
     //Display window
     setVisible(true);
-
-    //save username
-    username = new String(user);
   }
 
   //methods
-  private void buildPanel(String user)
+  private void buildPanel(UserAccount acc)
   {
     //create Buttons
     playlistDisplayButton = new JButton("Select playlist");     //create & caption button
@@ -80,8 +79,7 @@ public class UserGui extends JFrame
     logoutButton.addActionListener(logoutListener);
 
     //create selectors
-    account = new UserAccount(user);
-    playlistArray = account.getPlaylists();
+    playlistArray = acc.getPlaylists();
     playlistBox = new JComboBox(account.getPlaylists());
 
     songArray = playlistArray[0].getSongList();
@@ -126,7 +124,12 @@ public class UserGui extends JFrame
       //fields
       Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
 
-      account.removePlaylist(play);
+      try{
+        account.removePlaylist(play);
+        MyAppUtils.saveAccount(account);
+      } catch (Exception ex1) {
+        ex1.printStackTrace();
+      }
 
       //update playlist selector
       Playlist[] playlistArray1 = account.getPlaylists();
@@ -143,8 +146,14 @@ public class UserGui extends JFrame
       //prompt user for playlist name
       String name = JOptionPane.showInputDialog("Enter name");
 
-      //create playlist
-      account.addPlaylist(name);
+      //create playlist & save to database
+      try{
+        account.addPlaylist(name);
+        MyAppUtils.saveAccount(account);
+      } catch (Exception ex2)
+      {
+        ex2.printStackTrace();
+      }
 
       //update playlist selector
       Playlist[] playlistArray1 = account.getPlaylists();
@@ -162,7 +171,13 @@ public class UserGui extends JFrame
       Song song = (Song) playlistSongBox.getItemAt(playlistSongBox.getSelectedIndex());
       Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
 
-      play.removeSong(song); //remove song
+      //remove song and update database
+      try{
+        play.removeSong(song);
+        MyAppUtils.saveAccount(account);
+      } catch (Exception ex3) {
+        ex3.printStackTrace();
+      }
 
       //update song selctor
       Song[] songArray1 = play.getSongList();
@@ -177,7 +192,7 @@ public class UserGui extends JFrame
     public void actionPerformed(ActionEvent e)
     {
       //pass playlist to seach gui
-      SearchGui search = new SearchGui((Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex()));
+      SearchGui search = new SearchGui((Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex()),account);
 
       //update song selector
       Playlist play = (Playlist) playlistBox.getItemAt(playlistBox.getSelectedIndex());
@@ -197,10 +212,5 @@ public class UserGui extends JFrame
       new LoginGui();
       dispose();
     }
-  }
-
-  public static void main(String[] args)
-  {
-    new UserGui("John");
   }
 }

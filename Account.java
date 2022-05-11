@@ -1,4 +1,4 @@
-public class Account
+public class Account implements java.io.Serializable
 {
 	//STATE:
 	private String username;
@@ -11,26 +11,9 @@ public class Account
 		password = "";
 	}
 
-	public Account(String u, String p){
-		username = u;
-		password = p;
-	}
-
-	//OTHER METHODS:
-	public void deleteAccount()
-	{
-		username = "";
-		password = "";
-	}
-
-	//SETTERS:
-	public void setUsername(String u)
+	public Account(String u, String p)
 	{
 		username = u;
-	}
-
-	public void setPassword(String p)
-	{
 		password = p;
 	}
 
@@ -45,5 +28,4 @@ public class Account
 	{
 		return password;
 	}
-
 }
