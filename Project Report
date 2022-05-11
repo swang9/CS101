@@ -183,7 +183,7 @@ d. Which part was the most difficult to develop and implement?
 The most difficult part was planning the file i/o portion, and designing the utility methods that would allow for implementing the database with the rest of the system. There was also a lot of troubleshooting that had to be done with the utility methods for the i/o.
 
 CONTRIBUTIONS:
-Stacey Wang: Design Solution/UML Diagrams
+Stacey Wang: Design Solution, UML Diagrams, Account, UserAccount, ArtistAccount, troubleshooting
 George Wu:
 Dylan Xu: Statement of the Problem, GUI, file i/o, troubleshooting, video
 Fati De la Cruz: Song, Playlist, Album
